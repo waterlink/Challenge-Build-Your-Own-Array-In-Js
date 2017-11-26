@@ -1,0 +1,4 @@
+/.idea/**/*.xml binary
+*.iml binary
+/lib/** binary
+/spec/PlainArray/src/** binary
