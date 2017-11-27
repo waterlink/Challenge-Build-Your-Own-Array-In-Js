@@ -17,11 +17,10 @@
   };
 
   MyArray.prototype.get = function (index) {
-    if (isIndexInRange(index, this.elements)) {
-      return this.elements.get(index);
-    } else {
+    if (!isIndexInRange(index, this.elements)) {
       return undefined;
     }
+    return this.elements.get(index);
   };
 
   MyArray.prototype.set = function (index, value) {
