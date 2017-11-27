@@ -8,15 +8,19 @@ function MyArray(initialCapacity) {
 }
 
 MyArray.prototype.length = function () {
-
+    return this.size;
 };
 
 MyArray.prototype.push = function (value) {
-
+    this.size += 1;
 };
 
 MyArray.prototype.get = function (index) {
-
+    try {
+      return this.elements.get(index);
+    } catch (err) {
+        return undefined;
+    }
 };
 
 MyArray.prototype.set = function (index, value) {
