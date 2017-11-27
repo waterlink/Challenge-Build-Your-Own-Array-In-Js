@@ -12,7 +12,9 @@ MyArray.prototype.length = function () {
 };
 
 MyArray.prototype.push = function (value) {
+    this.elements.set(this.size, value);
     this.size += 1;
+    //TODO resize
 };
 
 MyArray.prototype.get = function (index) {
