@@ -57,12 +57,16 @@ describe('MyArray', function () {
             array.push('1');
             array.push(3);
             array.push('hello');
+            array.push('hello');
+            array.push('hello');
 
-            expect(array.length()).toEqual(4);
+            expect(array.length()).toEqual(6);
             expect(array.get(0)).toEqual(42);
             expect(array.get(1)).toEqual('1');
             expect(array.get(2)).toEqual(3);
             expect(array.get(3)).toEqual('hello');
+            expect(array.get(4)).toEqual('hello');
+            expect(array.get(5)).toEqual('hello');
         });
     });
 
@@ -203,7 +207,7 @@ describe('MyArray', function () {
         it('returns index of the only occurrence', function () {
             var array = MyArray.of(1, '2', 2, 4);
 
-            expect(array.indexOf(2)).toEqual(2);
+            expect(array.indexOf(4)).toEqual(3);
         });
 
         it('returns index of the first occurrence', function () {
