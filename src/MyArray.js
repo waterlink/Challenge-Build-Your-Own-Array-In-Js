@@ -1,28 +1,51 @@
 function MyArray(initialCapacity) {
-    if (initialCapacity === undefined) {
-        initialCapacity = 3;
-    }
+  if (!initialCapacity) {
+    initialCapacity = 3;
+  }
 
-    this.elements = new PlainArray(initialCapacity);
-    this.size = 0;
+  this.elements = new PlainArray(initialCapacity);
+  this.size = 0;
 }
 
 MyArray.prototype.length = function () {
-    return this.size;
+  return this.size;
 };
 
-MyArray.prototype.push = function (value) {
+MyArray.prototype.push = (function () {
+  /**
+   * resizes the array
+   * @param {PlainArray} oldArray 
+   * @param {number} newCapacity 
+   */
+  function resizeArray(oldArray, newCapacity) {
+    var newArray = new PlainArray(newCapacity);
+    var value;
+
+    for (var i = 0; i < oldArray.length; i += 1) {
+      value = oldArray.get(i);
+      newArray.set(i, value);
+    }
+
+    return newArray;
+  }
+
+
+  return function(value) {
+    if (this.size === this.elements.length) {
+      this.elements = resizeArray(this.elements, this.size * 2);
+    }
+
     this.elements.set(this.size, value);
     this.size += 1;
-    //TODO resize
-};
+  }
+})();
 
 MyArray.prototype.get = function (index) {
-    try {
-      return this.elements.get(index);
-    } catch (err) {
-        return undefined;
-    }
+  try {
+    return this.elements.get(index);
+  } catch (err) {
+    return undefined;
+  }
 };
 
 MyArray.prototype.set = function (index, value) {
