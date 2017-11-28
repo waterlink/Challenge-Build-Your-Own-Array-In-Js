@@ -1,5 +1,22 @@
 const MyArray = (function() {
 
+  /**
+   * resizes the array
+   * @param {PlainArray} oldArray 
+   * @param {number} newCapacity 
+   */
+  function resizeArray(oldArray, newCapacity) {
+    var newArray = new PlainArray(newCapacity);
+    var value;
+
+    for (var i = 0; i < oldArray.length; i += 1) {
+      value = oldArray.get(i);
+      newArray.set(i, value);
+    }
+
+    return newArray;
+  }
+
   function MyArray(initialCapacity) {
     if (!initialCapacity) {
       initialCapacity = 3;
@@ -14,24 +31,7 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.push = (function () {
-    /**
-     * resizes the array
-     * @param {PlainArray} oldArray 
-     * @param {number} newCapacity 
-     */
-    function resizeArray(oldArray, newCapacity) {
-      var newArray = new PlainArray(newCapacity);
-      var value;
-  
-      for (var i = 0; i < oldArray.length; i += 1) {
-        value = oldArray.get(i);
-        newArray.set(i, value);
-      }
-  
-      return newArray;
-    }
-  
-  
+    
     return function(value) {
       if (this.size === this.elements.length) {
         this.elements = resizeArray(this.elements, this.size * 2);
@@ -51,6 +51,11 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.set = function (index, value) {
+    if(index >= this.elements.length) {
+      this.elements = resizeArray(this.elements, index + 1);
+      this.size = this.elements.length;
+    }
+    
     this.elements.set(index, value);
   };
   
