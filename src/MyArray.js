@@ -66,7 +66,14 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.pop = function () {
-  
+    if(this.size > 0) {
+      const lastElementIndex = this.size - 1;
+      const item = this.elements.get(lastElementIndex);
+      this.elements.set(lastElementIndex, undefined);
+      this.size -= 1;
+      
+      return item;
+    } 
   };
   
   MyArray.prototype.concat = function (other) {
