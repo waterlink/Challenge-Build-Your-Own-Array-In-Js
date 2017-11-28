@@ -366,10 +366,11 @@ describe('MyArray', function () {
             var receivedElements = new MyArray();
 
             array.forEach(function (element, index) {
+                return 'something';
             });
 
             var expected = MyArray.of(1, '2', 10, 3, 'abc', 4);
-            expect(array.equals(expected)).toEqual(true)
+            expect(array.equals(expected)).toEqual(true);
         });
     });
 
