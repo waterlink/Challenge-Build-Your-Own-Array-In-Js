@@ -55,12 +55,14 @@ const MyArray = (function() {
       this.elements = resizeArray(this.elements, index + 1);
       this.size = this.elements.length;
     }
-    
+
     this.elements.set(index, value);
   };
   
-  MyArray.of = function () {
-  
+  MyArray.of = function (...args) {
+    const newArray = new MyArray(args.length);
+    args.forEach(item => newArray.push(item));
+    return newArray;
   };
   
   MyArray.prototype.pop = function () {
