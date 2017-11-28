@@ -95,12 +95,8 @@ MyArray.prototype.findIndex = function (fn) {
 };
 
 MyArray.prototype.equals = function (other) {
-    if(this.length() !== other.length()) return false;
-
-    for (let i = 0; i < this.length(); ++i) {
-        if(this.get(i) !== other.get(i)) return false;
-    };
-    return true;
+    return this.length() === other.length()
+        && this.every((element, index) => element === other.get(index));
 };
 
 MyArray.prototype.forEach = function (fn) {
@@ -155,23 +151,11 @@ MyArray.prototype.reverse = function () {
 };
 
 MyArray.prototype.shift = function () {
-    if(this.length() === 0) return;
-
-    const el = this.get(0);
-
-    for(let i = 1; i < this.length(); ++i) this.set(i - 1, this.get(i));
-    this.set(this.length() - 1, undefined);
-    this.size--;
-
-    return el;
+    return this.splice(0, 1).get(0);
 };
 
 MyArray.prototype.unshift = function (element) {
-    const array = new MyArray(this.length() + 1);
-    array.push(element);
-    this.forEach(el => array.push(el));
-    this.elements = array.elements;
-    this.size = array.length();
+    this.splice(0, 0, element);
 };
 
 MyArray.prototype.slice = function (start = 0, end = this.length()) {
