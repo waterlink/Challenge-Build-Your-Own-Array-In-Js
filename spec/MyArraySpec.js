@@ -364,6 +364,18 @@ describe('MyArray', function () {
             var expected = MyArray.of('1,0', '2,1', '10,2', '3,3', 'abc,4', '4,5');
             expect(receivedElements.equals(expected)).toEqual(true);
         });
+
+        it('preserves original array', function() {
+            var array = MyArray.of(1, '2', 10, 3, 'abc', 4);
+            var receivedElements = new MyArray();
+
+            array.forEach(function (element, index) {
+                return 'something';
+            });
+
+            var expected = MyArray.of(1, '2', 10, 3, 'abc', 4);
+            expect(array.equals(expected)).toEqual(true);
+        });
     });
 
     describe('join(separator=",") joins array into string', function () {
