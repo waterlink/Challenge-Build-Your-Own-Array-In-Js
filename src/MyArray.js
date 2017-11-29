@@ -128,10 +128,7 @@ MyArray.prototype.equals = function (other) {
 
 MyArray.prototype.forEach = function (fn) {
 	for(var i = 0; i < this.size; i++) {
-		var r = fn(this.get(i), i);
-		if(r != undefined) {
-			this.set(i, r);
-		}
+		fn(this.get(i), i);
 	}
 };
 
@@ -156,8 +153,11 @@ MyArray.prototype.toString = function () {
 };
 
 MyArray.prototype.map = function (fn) {
-	this.forEach(fn);
-	return this;
+  var a = this.slice();
+	this.forEach((element, index) => {
+    a.set(index, fn(element, index));
+  });
+	return a;
 };
 
 MyArray.prototype.filter = function (fn) {
