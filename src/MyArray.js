@@ -95,20 +95,49 @@ const MyArray = (function() {
     return newArray;
   };
   
+  /**
+   * 
+   * @param {any} element 
+   * @returns {number} index of element
+   */
   MyArray.prototype.indexOf = function (element) {
-  
+    let index = -1;
+
+    this.forEach((item, i) => {
+      if(element === item && index === -1) {
+        index = i;
+      }
+    });
+
+    return index;
   };
   
   MyArray.prototype.lastIndexOf = function (element) {
-  
+    let index = -1;
+    
+    this.forEach((item, i) => {
+      if(element === item) {
+        index = i;
+      }
+    });
+
+    return index;
   };
   
   MyArray.prototype.includes = function (element) {
-  
+    return this.indexOf(element) !== -1;
   };
   
   MyArray.prototype.find = function (fn) {
-  
+    let element = undefined;
+
+    this.forEach((item) => {
+      if(element === undefined && fn(item)) {
+        element = item;
+      }
+    });
+
+    return element;
   };
   
   MyArray.prototype.findIndex = function (fn) {
