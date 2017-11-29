@@ -174,12 +174,18 @@ const MyArray = (function() {
     }
   };
   
-  MyArray.prototype.join = function (separator) {
-  
+  MyArray.prototype.join = function (separator = ',') {
+    let result = '';
+
+    this.forEach(item => result = result + item + separator);
+
+    result = result.slice(0, result.length - separator.length);
+
+    return result;
   };
   
   MyArray.prototype.toString = function () {
-  
+    return this.join();
   };
   
   MyArray.prototype.map = function (fn) {
