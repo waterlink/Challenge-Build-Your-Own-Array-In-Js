@@ -1,11 +1,13 @@
+//@ts-check
+
 const MyArray = (function() {
 
   /**
    * resizes the array
-   * @param {PlainArray} oldArray 
+   * @param {any} oldArray 
    * @param {number} newCapacity 
    */
-  function resizeArray(oldArray, newCapacity) {
+  function resizePlainArray(oldArray, newCapacity) {
     var newArray = new PlainArray(newCapacity);
     var value;
 
@@ -13,6 +15,14 @@ const MyArray = (function() {
       value = oldArray.get(i);
       newArray.set(i, value);
     }
+
+    return newArray;
+  }
+
+  function cloneArray(oldArray) {
+    var newArray = new MyArray(oldArray.length());
+
+    oldArray.forEach((item, i) => newArray.push(oldArray.get(i)));
 
     return newArray;
   }
@@ -30,18 +40,20 @@ const MyArray = (function() {
     return this.size;
   };
   
-  MyArray.prototype.push = (function () {
-    
-    return function(value) {
+  MyArray.prototype.push = function(value) {
       if (this.size === this.elements.length) {
-        this.elements = resizeArray(this.elements, this.size * 2);
+        this.elements = resizePlainArray(this.elements, this.size * 2);
       }
   
       this.elements.set(this.size, value);
       this.size += 1;
-    }
-  })();
+  };
   
+  /**
+   * Returns the element at index or undefined
+   * @param {number} index
+   * @returns {any|undefined} Item at index
+   */
   MyArray.prototype.get = function (index) {
     try {
       return this.elements.get(index);
@@ -52,7 +64,7 @@ const MyArray = (function() {
   
   MyArray.prototype.set = function (index, value) {
     if(index >= this.elements.length) {
-      this.elements = resizeArray(this.elements, index + 1);
+      this.elements = resizePlainArray(this.elements, index + 1);
       this.size = this.elements.length;
     }
 
@@ -77,7 +89,10 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.concat = function (other) {
+    const newArray = cloneArray(this);
+    other.forEach((item) => newArray.push(item));
   
+    return newArray;
   };
   
   MyArray.prototype.indexOf = function (element) {
@@ -105,7 +120,9 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.forEach = function (fn) {
-  
+    for(let i = 0; i < this.size; i += 1) {
+      fn(this.elements.get(i), i);
+    }
   };
   
   MyArray.prototype.join = function (separator) {
