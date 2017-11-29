@@ -141,11 +141,31 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.findIndex = function (fn) {
-  
+    let index = -1;
+    
+    this.forEach((item, i) => {
+      if(index === -1 && fn(item)) {
+        index = i;
+      }
+    });
+
+    return index;
   };
   
   MyArray.prototype.equals = function (other) {
-  
+    let theSame = true;
+
+    if(this.length !== other.length) {
+      return false;
+    }
+
+    this.forEach((item, i) => {
+      if(item !== other.get(i)) {
+        theSame = false;
+      }
+    });
+
+    return theSame;
   };
   
   MyArray.prototype.forEach = function (fn) {
