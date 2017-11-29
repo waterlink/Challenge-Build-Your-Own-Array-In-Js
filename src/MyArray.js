@@ -189,19 +189,35 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.map = function (fn) {
-  
+    var newArray = new MyArray(this.length);
+
+    this.forEach(item => newArray.push(fn(item)));
+
+    return newArray;
   };
   
   MyArray.prototype.filter = function (fn) {
-  
+    var newArray = new MyArray(this.length);
+
+    this.forEach(item => {
+      if(fn(item)) {
+        newArray.push(item);
+      }
+    });
+
+    return newArray;
   };
   
   MyArray.prototype.some = function (fn) {
-  
+    return this.findIndex(fn) !== -1;
   };
   
   MyArray.prototype.every = function (fn) {
-  
+    let allGood = true;
+
+    this.forEach(item => allGood = allGood && fn(item));
+
+    return allGood;
   };
   
   MyArray.prototype.fill = function (value, start, end) {
