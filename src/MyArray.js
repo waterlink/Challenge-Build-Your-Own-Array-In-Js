@@ -1,5 +1,3 @@
-//@ts-check
-
 const MyArray = (function() {
 
   /**
@@ -191,7 +189,7 @@ const MyArray = (function() {
   MyArray.prototype.map = function (fn) {
     var newArray = new MyArray(this.length);
 
-    this.forEach(item => newArray.push(fn(item)));
+    this.forEach((item, index) => newArray.push(fn(item, index)));
 
     return newArray;
   };
@@ -220,8 +218,18 @@ const MyArray = (function() {
     return allGood;
   };
   
-  MyArray.prototype.fill = function (value, start, end) {
-  
+  MyArray.prototype.fill = function (value, start = 0, end = this.elements.length) {
+    const newPlainArray = new PlainArray(this.elements.length);
+
+    this.forEach((element, index) => {
+      if(index >= start && index < end) {
+        newPlainArray.set(index, value);
+      } else {
+        newPlainArray.set(index, element);
+      }
+    });
+
+    this.elements = newPlainArray;
   };
   
   MyArray.prototype.reverse = function () {
