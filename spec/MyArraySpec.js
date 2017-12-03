@@ -162,7 +162,6 @@ describe('MyArray', function () {
 
         it('concat of array with empty array is the same array', function () {
             var array = MyArray.of(1, '2', 3);
-
             var result = array.concat(new MyArray());
 
             expect(result.length()).toEqual(3);
