@@ -1,3 +1,4 @@
+// @ts-check
 const MyArray = (function() {
 
   /**
@@ -277,8 +278,20 @@ const MyArray = (function() {
     return newArray;
   };
   
-  MyArray.prototype.splice = function (start, deleteCount) {
-  
+  MyArray.prototype.splice = function (start = 0, deleteCount = this.length(), ...items) {
+    let newArray = this.slice(0, start);
+
+    console.log(items.length);
+
+    if(deleteCount < this.length() && items.length === 0) {
+      newArray = newArray.concat(this.slice(start+deleteCount));
+    }
+    else if(deleteCount < this.length() && items.length !== 0) {
+      newArray = newArray.concat(MyArray.of(...items)).concat(this.slice(start+deleteCount));
+    }
+
+    this.elements = newArray.elements;
+    this.size = this.elements.length;
   };
   
   return MyArray;
