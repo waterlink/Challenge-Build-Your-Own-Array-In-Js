@@ -245,7 +245,15 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.shift = function () {
-  
+    if(this.length() === 0) {
+      return;
+    }
+
+    const first = this.get(0);
+    this.elements = this.slice(1).elements;
+    this.size -= 1;
+
+    return first;
   };
   
   MyArray.prototype.unshift = function (element) {
