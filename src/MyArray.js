@@ -233,7 +233,15 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.reverse = function () {
-  
+    function loop(elements) {
+      if(elements.length() === 0) return new MyArray();
+      const arr = elements.slice(1);
+      const firstElement = elements.get(0);
+      return loop(arr).concat([firstElement])
+    }
+
+    const result = loop(this);
+    this.elements = result.elements;
   };
   
   MyArray.prototype.shift = function () {
@@ -244,8 +252,19 @@ const MyArray = (function() {
   
   };
   
-  MyArray.prototype.slice = function (start, end) {
-  
+  MyArray.prototype.slice = function (start = 0, end = this.length()) {
+    if(end - start === this.length()) {
+      return this;
+    }
+
+    const newArray = new MyArray(end - start);
+    this.forEach((element, index) => {
+      if(index >= start && index < end) {
+        newArray.push(element);
+      }
+    });
+
+    return newArray;
   };
   
   MyArray.prototype.splice = function (start, deleteCount) {
