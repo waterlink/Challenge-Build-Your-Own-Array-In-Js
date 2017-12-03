@@ -237,7 +237,7 @@ const MyArray = (function() {
       if(elements.length() === 0) return new MyArray();
       const arr = elements.slice(1);
       const firstElement = elements.get(0);
-      return loop(arr).concat([firstElement])
+      return loop(arr).concat(MyArray.of(firstElement))
     }
 
     const result = loop(this);
@@ -257,7 +257,9 @@ const MyArray = (function() {
   };
   
   MyArray.prototype.unshift = function (element) {
-  
+    const newArray = MyArray.of(element).concat(this);
+    this.elements = newArray.elements;
+    this.size += 1;
   };
   
   MyArray.prototype.slice = function (start = 0, end = this.length()) {
