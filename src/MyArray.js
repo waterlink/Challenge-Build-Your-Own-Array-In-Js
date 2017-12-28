@@ -9,6 +9,22 @@ function MyArray(initialCapacity) {
 	this.size = this.elements.length; // DO THIS LINE AT THE END OF EVERY SIZE-CHANGING METHOD ?
 }
 
+MyArray.of = function() {
+	if (arguments.length === 0) {
+		return new MyArray(0);
+	}
+	else if (arguments.length === 1) {
+		return new MyArray(arguments[0]);
+	}
+	else {
+		var a = new MyArray(arguments.length);
+		for (var i = 0; i < arguments.length; ++i) {
+			a.set(i, arguments[i]);
+		}
+		return a;
+	}
+};
+
 MyArray.prototype.length = function() {		// IDEA: LENGTH() SHOULD NEVER BE A FUNCTION IN JS
 	return this.size;
 };
@@ -20,7 +36,17 @@ MyArray.prototype.get = function(index) {
 };
 
 MyArray.prototype.set = function(index, value) {
-	// length doesn't change
+	// length can increase
+	if (index >= this.size) {
+		var newArray = new PlainArray(index + 1);
+
+		for (var i = 0; i < this.size; i++) {
+			newArray.set(i, this.get(i));
+		}
+
+		this.elements = newArray;
+		this.size = this.elements.length;
+	}
 	return this.elements.set(index, value);
 };
 
@@ -40,6 +66,8 @@ MyArray.prototype.push = function(value) {
 
 MyArray.prototype.pop = function() {
 	// decreases length
+	if (this.size === 0) return undefined;
+
 	var i = this.size - 1;
 	var el = this.elements.get(i);
 	this.elements.set(i, undefined);
@@ -144,9 +172,5 @@ MyArray.prototype.slice = function(start, end) {
 };
 
 MyArray.prototype.splice = function(start, deleteCount) {
-
-};
-
-MyArray.of = function() {
 
 };
