@@ -71,15 +71,21 @@ MyArray.prototype.pop = function() {
 	var i = this.size - 1;
 	var el = this.elements.get(i);
 	this.elements.set(i, undefined);
-	this.elements.length -= 1;
-	this.size = this.elements.length;
+	this.size = this.elements.length - 1;
 	return el;
 };
 
 MyArray.prototype.concat = function(other) {
+	if (this.size === 0) return other;
+
+	// unwrap:
+	if (other instanceof MyArray) other = other.elements;
+
 	for (var i = 0; i < other.length; i++) {
+		console.log(i);
 		this.push(other.get(i));
 	}
+	//this.size = this.elements.length;
 	return this;
 };
 
