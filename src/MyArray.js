@@ -120,11 +120,22 @@ MyArray.prototype.findIndex = function(fn) {
 		var el = this.elements.get(i);
 		if (fn.call(null, el)) return i;
 	}
-	return undefined;
+	return -1;
 };
 
 MyArray.prototype.equals = function(other) {
+	// Unwrap:
+	if (other instanceof MyArray) other = other.elements;
 
+	// False if lengths differ:
+	if (this.size !== other.length) return false;
+
+	// False if an element differs:
+	for (var i = 0; i < this.size; i++) {
+		if (this.get(i) !== other.get(i)) return false;
+	}
+	// True if same length and same elements:
+	return true;
 };
 
 MyArray.prototype.forEach = function(fn) {
