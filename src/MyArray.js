@@ -104,15 +104,23 @@ MyArray.prototype.lastIndexOf = function(element) {
 };
 
 MyArray.prototype.includes = function(element) {
-
+	return this.indexOf(element) > -1;
 };
 
 MyArray.prototype.find = function(fn) {
-
+	for (var i = 0; i < this.size; i++) {
+		var el = this.elements.get(i);
+		if (fn.call(null, el)) return el;
+	}
+	return undefined;
 };
 
 MyArray.prototype.findIndex = function(fn) {
-
+	for (var i = 0; i < this.size; i++) {
+		var el = this.elements.get(i);
+		if (fn.call(null, el)) return i;
+	}
+	return undefined;
 };
 
 MyArray.prototype.equals = function(other) {
