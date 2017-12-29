@@ -145,7 +145,7 @@ MyArray.prototype.forEach = function(fn) {
 	}
 };
 
-MyArray.prototype.join = function(separator) {
+MyArray.prototype.join = function(separator = ",") {
 	var len = this.elements.length;
 	var s = "";
 	for (var i = 0; i < len; i++) {
@@ -156,7 +156,7 @@ MyArray.prototype.join = function(separator) {
 };
 
 MyArray.prototype.toString = function() {
-	return "[" + this.join(", ") + "]";
+	return this.join();
 };
 
 MyArray.prototype.map = function(fn) {
