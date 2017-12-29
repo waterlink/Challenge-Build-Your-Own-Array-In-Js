@@ -168,15 +168,19 @@ MyArray.prototype.map = function(fn) {
 };
 
 MyArray.prototype.filter = function(fn) {
-
+	var newArray = new MyArray(0);
+	this.forEach(function(el) {
+		if (fn.call(null, el)) newArray.push(el);
+	});
+	return newArray;
 };
 
 MyArray.prototype.some = function(fn) {
-
+	return this.filter(fn).length() > 0;
 };
 
 MyArray.prototype.every = function(fn) {
-
+	return this.filter(fn).equals(this);
 };
 
 MyArray.prototype.fill = function(value, start, end) {
