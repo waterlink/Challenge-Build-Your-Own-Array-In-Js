@@ -184,11 +184,16 @@ MyArray.prototype.every = function(fn) {
 };
 
 MyArray.prototype.fill = function(value, start, end) {
-
+	start = start || 0;
+	end = end || this.size;
+	for (var i = start; i < end; i++) {
+		this.set(i, value);
+	}
+	return this;
 };
 
 MyArray.prototype.reverse = function() {
-	var reversed = new PlainArray(this.size);
+	var reversed = new MyArray(this.size);
 	for (var i = this.size - 1; i >= 0; i--) {
 		reversed.push(this.get(i));
 	}
