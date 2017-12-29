@@ -139,7 +139,10 @@ MyArray.prototype.equals = function(other) {
 };
 
 MyArray.prototype.forEach = function(fn) {
-
+	for (var i = 0; i < this.size; i++) {
+		var el = this.elements.get(i);
+		fn.call(null, el, i);
+	}
 };
 
 MyArray.prototype.join = function(separator) {
