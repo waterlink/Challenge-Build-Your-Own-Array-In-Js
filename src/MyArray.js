@@ -160,7 +160,11 @@ MyArray.prototype.toString = function() {
 };
 
 MyArray.prototype.map = function(fn) {
-
+	var newArray = new MyArray(0);
+	this.forEach(function(el) {
+		newArray.push(fn.call(null, el));
+	});
+	return newArray;
 };
 
 MyArray.prototype.filter = function(fn) {
