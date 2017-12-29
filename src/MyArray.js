@@ -1,12 +1,8 @@
 /* global PlainArray */
 
 function MyArray(initialCapacity) {
-	//if (initialCapacity === undefined) {
-	//	initialCapacity = 0;
-	//}
 	this.elements = new PlainArray(initialCapacity || 0);	// has .get(i), .set(i,v), .length
-	//console.log(this.elements);
-	this.size = this.elements.length; // DO THIS LINE AT THE END OF EVERY SIZE-CHANGING METHOD ?
+	this.size = this.elements.length;
 }
 
 MyArray.of = function() {
@@ -202,11 +198,29 @@ MyArray.prototype.reverse = function() {
 };
 
 MyArray.prototype.shift = function() {
+	var el = this.get(0),
+		newArray = new MyArray(0);
 
+	for (var i = 1; i < this.size; i++) {
+		newArray.push(this.get(i));
+	}
+	this.elements = newArray.elements;
+	this.size = this.elements.length;
+
+	return el;
 };
 
 MyArray.prototype.unshift = function(element) {
+	var newArray = new MyArray(0);
+	newArray.push(element);
 
+	for (var i = 0; i < this.size; i++) {
+		newArray.push(this.get(i));
+	}
+	this.elements = newArray.elements;
+	this.size = this.elements.length;
+
+	return this;
 };
 
 MyArray.prototype.slice = function(start, end) {
