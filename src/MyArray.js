@@ -193,11 +193,12 @@ MyArray.prototype.fill = function(value, start, end) {
 };
 
 MyArray.prototype.reverse = function() {
-	var reversed = new MyArray(this.size);
+	var reversed = new MyArray(0);
 	for (var i = this.size - 1; i >= 0; i--) {
 		reversed.push(this.get(i));
 	}
-	return reversed;
+	this.elements = reversed.elements;
+	return this;
 };
 
 MyArray.prototype.shift = function() {
