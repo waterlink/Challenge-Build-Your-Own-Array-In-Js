@@ -725,5 +725,23 @@ describe('MyArray', function () {
             var expected = MyArray.of('a', 5, 42, 'a', '42', 'hello', 77);
             expect(array.equals(expected)).toEqual(true);
         });
+
+		it('returns deleted items - none deleted', function () {
+			var array = MyArray.of('a', 5, '42', 'hello', 77);
+
+			var result = array.splice(0, 0);
+
+			var expected = new MyArray(0);
+			expect(result.equals(expected)).toEqual(true);
+		});
+
+		it('returns deleted items - some deleted', function () {
+			var array = MyArray.of('a', 5, '42', 'hello', 77);
+
+			var result = array.splice(0, 3);
+
+			var expected = MyArray.of('a', 5, '42');
+			expect(result.equals(expected)).toEqual(true);
+		});
     });
 });
