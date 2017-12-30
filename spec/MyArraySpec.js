@@ -673,8 +673,7 @@ describe('MyArray', function () {
         });
     });
 
-    describe('splice(start, deleteCount=MAX, ...items) replaces contents of the array' +
-        ' specified by start and deleteCount with items provided as arguments', function () {
+    describe('splice(start, deleteCount=MAX, ...items) replaces contents of the array', function () {
 
         it('deletes until the end of the array when only start index provided', function () {
             var array = MyArray.of('a', 5, '42', 'hello', 77);
@@ -718,11 +717,11 @@ describe('MyArray', function () {
         });
 
         it('inserts provided items instead of deleted items - no deleted', function () {
-            var array = MyArray.of('a', 5, '42', 'hello', 77);
+            var array = MyArray.of('a', 5, '43', 'hello', 77);
 
-            array.splice(2, 0, 42, 'a');
+            array.splice(2, 0, 42, 'b');
 
-            var expected = MyArray.of('a', 5, 42, 'a', '42', 'hello', 77);
+            var expected = MyArray.of('a', 5, 42, 'b', '43', 'hello', 77);
             expect(array.equals(expected)).toEqual(true);
         });
     });

@@ -74,14 +74,19 @@ MyArray.prototype.pop = function() {
 MyArray.prototype.concat = function(other) {
 	if (this.size === 0) return other;
 
-	// unwrap:
-	if (other instanceof MyArray) other = other.elements;
-
-	for (var i = 0; i < other.length; i++) {
-		console.log(i);
-		this.push(other.get(i));
+	// other can be MyArray or Array
+	// need one branch for PlainArray.get(i), other for Array[i]
+	if (other instanceof MyArray) {
+		other = other.elements;
+		for (var i = 0; i < other.length; i++) {
+			this.push(other.get(i));
+		}
 	}
-	//this.size = this.elements.length;
+	else if (other instanceof Array) {
+		for (var i = 0; i < other.length; i++) {
+			this.push(other[i]);
+		}
+	}
 	return this;
 };
 
@@ -224,9 +229,37 @@ MyArray.prototype.unshift = function(element) {
 };
 
 MyArray.prototype.slice = function(start, end) {
-
+	start = start || 0;
+	end = end || this.size;
+	var newArray = new MyArray(0);
+	for (var i = start; i < end; i++) {
+		newArray.push(this.get(i));
+	}
+	return newArray;
 };
 
-MyArray.prototype.splice = function(start, deleteCount) {
+MyArray.prototype.splice = function(start, deleteCount, ...items) {
+	items = items || [];
+	//console.log('splice in', items);
+	if (deleteCount === undefined) deleteCount = this.size - start;
+	//console.log(deleteCount, 'to delete');
+	var end = start + deleteCount;
+	//console.log('end', end);
+	var head = new MyArray(0),
+		tail = new MyArray(0),
+		deleted = new MyArray(0);
 
+	this.forEach(function(el,i) {
+		if (i < start) head.push(this.get(i));
+		else if (i >= end) tail.push(this.get(i));
+		else deleted.push(this.get(i));
+	}.bind(this));
+	//console.log('h', head.toString());
+	//console.log('t', tail.toString());
+	//console.log('d', deleted.toString());
+
+	this.elements = head.concat(items).concat(tail);
+	this.size = this.elements.length();
+
+	return deleted;
 };
