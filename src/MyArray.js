@@ -73,13 +73,10 @@ MyArray.prototype.pop = function() {
 };
 
 MyArray.prototype.concat = function(other) {
-	if (this.size === 0) return other;
-
 	// other could be MyArray or Array
 	// need one branch for PlainArray.get(i), other for Array[i]
 	if (other instanceof MyArray) {
-		other = other.elements;
-		for (var i = 0; i < other.length; i++) {
+		for (var i = 0; i < other.size; i++) {
 			this.push(other.get(i));
 		}
 	}
@@ -255,7 +252,7 @@ MyArray.prototype.slice = function(start, end) {
 };
 
 MyArray.prototype.splice = function(start, deleteCount, ...items) {
-	items = items || [];
+	if (items === undefined) items = [];
 	if (deleteCount === undefined) deleteCount = this.size - start;
 
 	var end = start + deleteCount;
@@ -269,8 +266,8 @@ MyArray.prototype.splice = function(start, deleteCount, ...items) {
 		else deleted.push(this.get(i));
 	}.bind(this));
 
-	this.elements = head.concat(items).concat(tail);
-	this.size = this.elements.length();
+	this.elements = head.concat(items).concat(tail).elements;
+	this.size = this.elements.length;
 
 	return deleted;
 };
