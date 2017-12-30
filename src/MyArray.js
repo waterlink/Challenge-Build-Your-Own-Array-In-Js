@@ -1,7 +1,7 @@
 /* global PlainArray */
 
 function MyArray(initialCapacity) {
-	this.elements = new PlainArray(initialCapacity || 0);	// has .get(i), .set(i,v), .length
+	this.elements = new PlainArray(initialCapacity || 0);
 	this.size = this.elements.length;
 }
 
@@ -21,12 +21,11 @@ MyArray.of = function() {
 	}
 };
 
-MyArray.prototype.length = function() {		// IDEA: LENGTH() SHOULD NEVER BE A FUNCTION IN JS
+MyArray.prototype.length = function() {
 	return this.size;
 };
 
 MyArray.prototype.get = function(index) {
-	// length doesn't change
 	if (index < 0 || index >= this.size) return undefined;
 	else return this.elements.get(index);
 };
@@ -57,24 +56,26 @@ MyArray.prototype.push = function(value) {
 
 	this.elements = newArray;
 	this.size = this.elements.length;
+
 	return this;
 };
 
 MyArray.prototype.pop = function() {
-	// decreases length
+	// decreases length by 1
 	if (this.size === 0) return undefined;
 
 	var i = this.size - 1;
 	var el = this.elements.get(i);
 	this.elements.set(i, undefined);
 	this.size = this.elements.length - 1;
+
 	return el;
 };
 
 MyArray.prototype.concat = function(other) {
 	if (this.size === 0) return other;
 
-	// other can be MyArray or Array
+	// other could be MyArray or Array
 	// need one branch for PlainArray.get(i), other for Array[i]
 	if (other instanceof MyArray) {
 		other = other.elements;
@@ -147,12 +148,14 @@ MyArray.prototype.forEach = function(fn) {
 };
 
 MyArray.prototype.join = function(separator = ",") {
-	var len = this.elements.length;
-	var s = "";
+	var len = this.elements.length,
+		s = "";
+
 	for (var i = 0; i < len; i++) {
 		s += this.get(i);
 		if (i+1 < len) s += separator;
 	}
+
 	return s;
 };
 
@@ -162,17 +165,21 @@ MyArray.prototype.toString = function() {
 
 MyArray.prototype.map = function(fn) {
 	var newArray = new MyArray(0);
+
 	this.forEach(function(el) {
 		newArray.push(fn.call(null, el));
 	});
+
 	return newArray;
 };
 
 MyArray.prototype.filter = function(fn) {
 	var newArray = new MyArray(0);
+
 	this.forEach(function(el) {
 		if (fn.call(null, el)) newArray.push(el);
 	});
+
 	return newArray;
 };
 
@@ -187,18 +194,23 @@ MyArray.prototype.every = function(fn) {
 MyArray.prototype.fill = function(value, start, end) {
 	start = start || 0;
 	end = end || this.size;
+
 	for (var i = start; i < end; i++) {
 		this.set(i, value);
 	}
+
 	return this;
 };
 
 MyArray.prototype.reverse = function() {
 	var reversed = new MyArray(0);
+
 	for (var i = this.size - 1; i >= 0; i--) {
 		reversed.push(this.get(i));
 	}
+
 	this.elements = reversed.elements;
+
 	return this;
 };
 
@@ -209,6 +221,7 @@ MyArray.prototype.shift = function() {
 	for (var i = 1; i < this.size; i++) {
 		newArray.push(this.get(i));
 	}
+
 	this.elements = newArray.elements;
 	this.size = this.elements.length;
 
@@ -222,6 +235,7 @@ MyArray.prototype.unshift = function(element) {
 	for (var i = 0; i < this.size; i++) {
 		newArray.push(this.get(i));
 	}
+
 	this.elements = newArray.elements;
 	this.size = this.elements.length;
 
@@ -232,19 +246,19 @@ MyArray.prototype.slice = function(start, end) {
 	start = start || 0;
 	end = end || this.size;
 	var newArray = new MyArray(0);
+
 	for (var i = start; i < end; i++) {
 		newArray.push(this.get(i));
 	}
+
 	return newArray;
 };
 
 MyArray.prototype.splice = function(start, deleteCount, ...items) {
 	items = items || [];
-	//console.log('splice in', items);
 	if (deleteCount === undefined) deleteCount = this.size - start;
-	//console.log(deleteCount, 'to delete');
+
 	var end = start + deleteCount;
-	//console.log('end', end);
 	var head = new MyArray(0),
 		tail = new MyArray(0),
 		deleted = new MyArray(0);
@@ -254,9 +268,6 @@ MyArray.prototype.splice = function(start, deleteCount, ...items) {
 		else if (i >= end) tail.push(this.get(i));
 		else deleted.push(this.get(i));
 	}.bind(this));
-	//console.log('h', head.toString());
-	//console.log('t', tail.toString());
-	//console.log('d', deleted.toString());
 
 	this.elements = head.concat(items).concat(tail);
 	this.size = this.elements.length();
