@@ -371,7 +371,7 @@ describe('MyArray', function () {
             expect(receivedElements.equals(expected)).toEqual(true);
         });
 
-        it('preserves original array', function() {
+        it('preserves original array', function () {
             var array = MyArray.of(1, '2', 10, 3, 'abc', 4);
             var receivedElements = new MyArray();
 
@@ -726,22 +726,22 @@ describe('MyArray', function () {
             expect(array.equals(expected)).toEqual(true);
         });
 
-		it('returns deleted items - none deleted', function () {
-			var array = MyArray.of('a', 5, '42', 'hello', 77);
+        it('returns deleted items - none deleted', function () {
+            var array = MyArray.of('a', 5, '42', 'hello', 77);
 
-			var result = array.splice(0, 0);
+            var result = array.splice(0, 0);
 
-			var expected = new MyArray(0);
-			expect(result.equals(expected)).toEqual(true);
-		});
+            var expected = new MyArray(0);
+            expect(result.equals(expected)).toEqual(true);
+        });
 
-		it('returns deleted items - some deleted', function () {
-			var array = MyArray.of('a', 5, '42', 'hello', 77);
+        it('returns deleted items - some deleted', function () {
+            var array = MyArray.of('a', 5, '42', 'hello', 77);
 
-			var result = array.splice(0, 3);
+            var result = array.splice(0, 3);
 
-			var expected = MyArray.of('a', 5, '42');
-			expect(result.equals(expected)).toEqual(true);
-		});
+            var expected = MyArray.of('a', 5, '42');
+            expect(result.equals(expected)).toEqual(true);
+        });
     });
 });
