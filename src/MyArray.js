@@ -279,6 +279,8 @@ MyArray.prototype.splice = function (start, deleteCount) {
 
     var suffixLength = this.length() - start - deleteCount;
 
+    var deletedToReturn = this.slice(start, start + deleteCount);
+
     // shift suffix to start position
     for (i = start; i < start + suffixLength; i++) {
         this.set(i, this.get(i + deleteCount));
@@ -304,4 +306,6 @@ MyArray.prototype.splice = function (start, deleteCount) {
     for (i = 0; i < itemsLength; i++) {
         this.set(start + i, arguments[2 + i]);
     }
+
+    return deletedToReturn;
 };
