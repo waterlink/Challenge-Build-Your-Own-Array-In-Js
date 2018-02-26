@@ -207,7 +207,7 @@ describe('MyArray', function () {
         it('returns index of the only occurrence', function () {
             var array = MyArray.of(1, '2', 2, 4);
 
-            expect(array.indexOf(2)).toEqual(2);
+            expect(array.indexOf(4)).toEqual(3);
         });
 
         it('returns index of the only occurrence for different element', function () {
