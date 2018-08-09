@@ -6,11 +6,9 @@ function MyArray(initialCapacity) {
     this.elements = new PlainArray(initialCapacity);
     this.size = 0;
 }
-
 MyArray.prototype.length = function () {
     return this.size;
 };
-
 MyArray.prototype.push = function (value) {
     if(this.elements.length <= this.size)
     {
