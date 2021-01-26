@@ -195,6 +195,20 @@ describe('MyArray', function () {
             expect(result.get(3)).toEqual('4');
             expect(result.get(4)).toEqual(42);
         });
+
+        it('concat does not change the existing arrays', function () {
+            var array = MyArray.of(1, '2', 3);
+            var other = MyArray.of('4', 42);
+
+            array.concat(other);
+            expect(array.length()).toEqual(3);
+            expect(other.length()).toEqual(2);
+            expect(array.get(0)).toEqual(1);
+            expect(array.get(1)).toEqual('2');
+            expect(array.get(2)).toEqual(3);
+            expect(other.get(0)).toEqual('4');
+            expect(other.get(1)).toEqual(42);
+        });
     });
 
     describe('indexOf(element) returns the first index of the element', function () {
